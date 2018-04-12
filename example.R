@@ -17,8 +17,11 @@ R <- t(as.matrix(reads))
 ## The column of the IDs needs to be removed from Pi, as the matrix will be used for computations
 Pi <- as.matrix(reference[,-1])
 
+## the hyper parameters for the dirichlet distribution. Was estimated by fitting a Dirichlet distribution to cell counts data.
+alpha=c(2.5392, 1.7934, 0.7240, 0.7404, 1.8439, 15.0727)
+
 ## Run Bisect to estimate cell type proportions for the individuals in the dataset.
-P <- run_EM(R = R, Y = Y, Pi = Pi, estimate_Pi = F)
+P <- run_EM(R = R, Y = Y, Pi = Pi, estimate_Pi = F, alpha = alpha)
 
 
 ## Compare to real cell type composition --------------------------------------------------------------
