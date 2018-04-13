@@ -126,7 +126,7 @@ run_EM <- function(R, Y, Pi, P, n_known_samples = 0, iterations=200, estimate_Pi
     print(i)
   }
   
-  return(P)
+  return(list(P = P, Pi = Pi))
 }
 
 initialize_P <- function(n_individuals, n_cell_types, alpha = NA)

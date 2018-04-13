@@ -23,7 +23,8 @@ alpha=c(2.5392, 1.7934, 0.7240, 0.7404, 1.8439, 15.0727)
 initial_P <- initialize_P(nrow(Y), ncol(Pi), alpha)
 
 ## Run Bisect to estimate cell type proportions for the individuals in the dataset.
-P <- run_EM(R = R, Y = Y, Pi = Pi, P = initial_P ,estimate_Pi = F, alpha = alpha, iterations = 200)
+results <- run_EM(R = R, Y = Y, Pi = Pi, P = initial_P ,estimate_Pi = F, alpha = alpha, iterations = 200)
+estimated_P <- results$P
 
 ## Compare to real cell type composition --------------------------------------------------------------
 baseline <- read_csv('data/baseline_proportions.csv')
@@ -66,7 +67,10 @@ P <- rbind(known_samples, initial_P)
 Pi <- initialize_Pi(n_sites = ncol(R), n_cell_types = length(alpha))
 
 # Run Bisect, making sure to supply the number of known individuals.
-P <- run_EM(R = all_R, Y = all_Y, Pi = Pi, P = P, n_known_samples = n_known_samples, estimate_Pi = T, alpha = alpha, iterations = 200)
+results <- run_EM(R = all_R, Y = all_Y, Pi = Pi, P = P, n_known_samples = n_known_samples, estimate_Pi = T, alpha = alpha, iterations = 200)
+
+estimated_P <- results$P
+estimated_Pi <- results$Pi 
 
 ## Compare to real cell composition
 baseline <- read_csv('data/baseline_proportions.csv')
@@ -74,9 +78,14 @@ baseline <- read_csv('data/baseline_proportions.csv')
 baseline_unknown <- baseline[-known_samples_indices, ]
 all_baseline <- rbind(known_samples, baseline_unknown)
 
-visualization_result <- get_visualization_dataframe(P, all_baseline)
+visualization_result <- get_visualization_dataframe(estimated_P, all_baseline)
 
 ## plot a scatter plot of true cell types vs estimated.  Looks pretty good!
 visualization_result %>% ggplot(aes(truth, estimate, color=cell_type)) + geom_point(size=0.2, alpha = 0.4) + 
   geom_abline(intercept = 0, slope = 1) + xlab("True Cell Proportion") + ylab("Estimated Cell Proportion") + 
   guides(colour = guide_legend(override.aes = list(size=10))) + scale_color_discrete(name = "Cell Type")
+
+
+## and we also get a pretty decent estimation of the reference, Pi:
+# Calculate correlations between estimated methylation in cell type, and real methylation in the cell type:
+diag(cor(estimated_Pi, reference[, -1]))
