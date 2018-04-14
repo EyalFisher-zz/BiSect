@@ -1,20 +1,4 @@
----
-title: "BiSect: Infering Cell Type Compositon"
-author: "Eyal Fisher"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{BiSect: Infering Cell Type Compositon}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+# BiSect: Infering Cell Type Compositon form methylation sequencing data
 
 When conducting Epigenome Wide Association Studies (EWAS) on methylation data, it is important to account for the cell type heterogeneity in the samples,
 as failing to do so can result in biases and false positives. 
