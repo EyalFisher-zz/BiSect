@@ -45,8 +45,8 @@ methylation_unknown <-methylation_GSE40279[-known_samples_indices, ]
 total_known <- total_reads_GSE40279[known_samples_indices, ]
 total_unknown <- total_reads_GSE40279[-known_samples_indices, ]
 
-## Run Bisect
+## Run Bisect. You should use around 200 iterations. I choose than to accelarate the example.
 results <- bisect_semi_suprevised(methylation_unknown, total_unknown,
                                   methylation_known, total_known,
-                                  known_samples, alpha, iterations = 200)
+                                  known_samples, alpha, iterations = 10)
 }

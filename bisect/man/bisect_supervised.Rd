@@ -31,5 +31,6 @@ total_reads <- as.matrix(total_reads_GSE40279)
 ## Remove the IDs column from the reference
 Pi <- as.matrix(reference_blood[,-1])
 
-results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood)
+## Run Bisect. You should use around 200 iterations. I choose than to accelarate the example.
+results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood, iterations = 10)
 }
