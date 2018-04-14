@@ -5,8 +5,5 @@ sudo: false
 cache: packages
 
 install:
-- R -e 'devtools::install_deps(dep = T)'
-
-script:
-- R CMD build bisect
-- R CMD check *tar.gz
+before_install:
+  - cd bisect
