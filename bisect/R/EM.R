@@ -107,6 +107,7 @@ initialize_P <- function(n_individuals, n_cell_types, alpha) {
     return(initial_P)
 }
 
+#' @importFrom stats runif
 initialize_Pi <- function(n_sites, n_cell_types) {
     Pi <- runif(n_sites * n_cell_types)
     Pi <- matrix(Pi, nrow = n_sites)
@@ -125,8 +126,15 @@ initialize_Pi <- function(n_sites, n_cell_types) {
 #' @param iterations the number of iterations to use in the EM algorithm.
 #' @return A matrix of individuals (rows) on cell types (columns) containing the estimated proportion of each cell type, in each individual.
 #' @examples
-#' add(1, 1)
-#' add(10, 1)
+#' ## Prepare the methylation and total reads matrices
+#' methylation <- as.matrix(methylation_GSE40279)
+#' total_reads <- as.matrix(total_reads_GSE40279)
+#' ## Remove the IDs column from the reference
+#' Pi <- as.matrix(reference_blood[,-1])
+#'
+#' results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood)
+#' @importFrom utils txtProgressBar
+#' @importFrom utils setTxtProgressBar
 #' @export
 bisect_supervised <- function(methylation, total_reads, reference, alpha = NA, iterations = 200) {
     N <- nrow(methylation)
@@ -157,8 +165,25 @@ bisect_supervised <- function(methylation, total_reads, reference, alpha = NA, i
 #' @param iterations the number of iterations to use in the EM algorithm.
 #' @return A list containing P, a matrix of estimated cell proportions for the unknown samples, and Pi, an estimated reference (the probability of methylation in each cell type).
 #' @examples
-#' add(1, 1)
-#' add(10, 1)
+#' ## Randomly choose samples to be used as known
+#' n_known_samples <- 50
+#' known_samples_indices <- sample.int(nrow(baseline_GSE40279), size = n_known_samples)
+#' known_samples <- as.matrix(baseline_GSE40279[known_samples_indices, ])
+#'
+#' ## Fit a dirichlet distribution to known samples to use as prior
+#' fit_dirichlet <- sirt::dirichlet.mle(as.matrix(known_samples))
+#' alpha <- fit_dirichlet$alpha
+#'
+#' ## Prepare the 4 needed matrices
+#' methylation_known <- methylation_GSE40279[known_samples_indices, ]
+#' methylation_unknown <-methylation_GSE40279[-known_samples_indices, ]
+#' total_known <- total_reads_GSE40279[known_samples_indices, ]
+#' total_unknown <- total_reads_GSE40279[-known_samples_indices, ]
+#'
+#' ## Run Bisect
+#' results <- bisect_semi_suprevised(methylation_unknown, total_unknown,
+#'                                   methylation_known, total_known,
+#'                                   known_samples, alpha, iterations = 200)
 #' @export
 bisect_semi_suprevised <- function(methylation_unkown_samples, total_reads_unknown_samples, methylation_known_samples, total_reads_known_samples, cell_composition_known_samples,
     alpha = NA, iterations = 200) {

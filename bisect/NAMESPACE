@@ -2,3 +2,6 @@
 
 export(bisect_semi_suprevised)
 export(bisect_supervised)
+importFrom(stats,runif)
+importFrom(utils,setTxtProgressBar)
+importFrom(utils,txtProgressBar)

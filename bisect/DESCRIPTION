@@ -5,7 +5,7 @@ Authors@R: person("Eyal", "Fisher", email = "ef388@cam.ac.uk", role = c("aut", "
 Description: An implementation of BiSect, a method for inferring cell type composition of samples based on methylation sequencing data (Whole Genome Bisulfite Sequencing and Reduced Representation Sequencing). The method is specifically tailored for sequencing data, and therefore works better than methods developed for methylation arrays. It contains a supervised mode that requires a reference (the methylation probablities in the pure cell types), and a semi-supervised mode, that requires cell counts for a subset of the samples, but does not require a reference.
 URL: https://github.com/EyalFisher/BiSect
 Depends: R (>= 3.4.2)
-License: GNU General Public License v3.0
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

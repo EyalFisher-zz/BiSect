@@ -139,6 +139,8 @@ results <- bisect_semi_suprevised(methylation_unknown, total_unknown, methylatio
 This time results is a list containing both the cell type estimates for the unknown samples, and the estimated reference. Let us plot the estimated cell types against our full baseline:
 
 ```{r, fig.width=7}
+library(ggplot2)
+
 visualization_result <- get_visualization_dataframe(results$P, baseline_GSE40279[-known_samples_indices,])
 
 # plot a scatter plot of true cell types vs estimated.  Looks pretty good!
