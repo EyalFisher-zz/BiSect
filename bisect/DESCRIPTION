@@ -11,5 +11,7 @@ LazyData: true
 RoxygenNote: 6.0.1
 Suggests: dplyr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    tidyr,
+    sirt
 VignetteBuilder: knitr
