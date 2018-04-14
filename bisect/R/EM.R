@@ -132,7 +132,8 @@ initialize_Pi <- function(n_sites, n_cell_types) {
 #' ## Remove the IDs column from the reference
 #' Pi <- as.matrix(reference_blood[,-1])
 #'
-#' results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood)
+#' ## Run Bisect. You should use around 200 iterations. I choose than to accelarate the example.
+#' results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood, iterations = 10)
 #' @importFrom utils txtProgressBar
 #' @importFrom utils setTxtProgressBar
 #' @export
@@ -180,10 +181,10 @@ bisect_supervised <- function(methylation, total_reads, reference, alpha = NA, i
 #' total_known <- total_reads_GSE40279[known_samples_indices, ]
 #' total_unknown <- total_reads_GSE40279[-known_samples_indices, ]
 #'
-#' ## Run Bisect
+#' ## Run Bisect. You should use around 200 iterations. I choose than to accelarate the example.
 #' results <- bisect_semi_suprevised(methylation_unknown, total_unknown,
 #'                                   methylation_known, total_known,
-#'                                   known_samples, alpha, iterations = 200)
+#'                                   known_samples, alpha, iterations = 10)
 #' @export
 bisect_semi_suprevised <- function(methylation_unkown_samples, total_reads_unknown_samples, methylation_known_samples, total_reads_known_samples, cell_composition_known_samples,
     alpha = NA, iterations = 200) {
