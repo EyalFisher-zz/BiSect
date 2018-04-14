@@ -13,5 +13,6 @@ Suggests: dplyr,
     knitr,
     rmarkdown,
     tidyr,
-    sirt
+    sirt,
+    ggplot2
 VignetteBuilder: knitr
