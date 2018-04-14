@@ -21,7 +21,7 @@ install.packages('devtools')
 
 ## Supervised Mode: Using a Reference
 
-Using the supervised mode is pretty straight forward. First, we need two matrices: one with the number of methylated reads, and one with the number of total reads, for each sample and each site. This example was subsampled from array data provided in Hahnum El al. (CITE).
+Using the supervised mode is pretty straight forward. First, we need two matrices: one with the number of methylated reads, and one with the number of total reads, for each sample and each site. This example was subsampled from array data provided in Hahnum el al. (2013).
 
 The rows are samples and the columns are CpG sites:
 ```{r}
@@ -36,7 +36,7 @@ dim(total_reads)
 total_reads_GSE40279[1:10, 1:5]
 ```
 
-We also need a reference with the proabability for methylation in each site, in each pure cell type. Here we used the reference of Koestler el al. (CITE). 
+We also need a reference with the proabability for methylation in each site, in each pure cell type. Here we used the reference of Koestler el al. (2016). 
 
 ```{r}
 dim(reference_blood)
@@ -60,7 +60,7 @@ results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood)
 head(results)
 ``` 
 
-Before subsampling the dataset of Hahnum el al. we used the method by Housemann et al. (CITE) to estimate the cell composition from the array data. Because array data contains many thausands of probes at each site, the estimate is fairly accurate. Now we can compare the results of BiSect to a baseline:
+Before subsampling the dataset of Hahnum el al. we used the method by Housemann et al. (2012) to estimate the cell composition from the array data. Because array data contains many thausands of probes at each site, the estimate is fairly accurate. Now we can compare the results of BiSect to a baseline:
 
 ```{r, fig.width=7}
 library(dplyr)
