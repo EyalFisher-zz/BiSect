@@ -58,7 +58,7 @@ print(alpha_blood)
 
 Now we are ready to run bisect:
 ```{r, cache=T}
-results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood, iterations = 10)
+results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood, iterations = 200)
 
 head(results)
 ``` 
@@ -133,7 +133,7 @@ total_known <- total_reads_GSE40279[known_samples_indices, ]
 total_unknown <- total_reads_GSE40279[-known_samples_indices, ]
 
 # Run Bisect, making sure to supply the number of known individuals.
-results <- bisect_semi_suprevised(methylation_unknown, total_unknown, methylation_known, total_known, known_samples, alpha, iterations = 10)
+results <- bisect_semi_suprevised(methylation_unknown, total_unknown, methylation_known, total_known, known_samples, alpha, iterations = 200)
 ```
 
 This time results is a list containing both the cell type estimates for the unknown samples, and the estimated reference. Let us plot the estimated cell types against our full baseline:
