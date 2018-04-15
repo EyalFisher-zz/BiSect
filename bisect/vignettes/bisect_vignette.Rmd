@@ -3,6 +3,7 @@ title: "BiSect: Infering Cell Type Compositon"
 author: "Eyal Fisher"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: ../tools/bibliography.bib
 vignette: >
   %\VignetteIndexEntry{BiSect: Infering Cell Type Compositon}
   %\VignetteEngine{knitr::rmarkdown}
@@ -24,8 +25,7 @@ This package implements two modes, a *supervised mode*, for estimating the cell 
 
 ## Supervised Mode: Using a Reference
 
-Using the supervised mode is pretty straight forward. First, we need two matrices: one with the number of methylated reads, and one with the number of total reads, for each sample and each site. This example was subsampled from array data provided in Hahnum El al. (CITE).
-
+Using the supervised mode is pretty straight forward. First, we need two matrices: one with the number of methylated reads, and one with the number of total reads, for each sample and each site. This example was subsampled from array data provided in @hannum_genome-wide_2013.
 The rows are samples and the columns are CpG sites:
 ```{r}
 library(bisect)
@@ -39,7 +39,7 @@ dim(total_reads)
 total_reads_GSE40279[1:10, 1:5]
 ```
 
-We also need a reference with the proabability for methylation in each site, in each pure cell type. Here we used the reference of Koestler el al. (CITE). 
+We also need a reference with the proabability for methylation in each site, in each pure cell type. Here we used the reference of @koestler_improving_2016. 
 
 ```{r}
 dim(reference_blood)
@@ -58,12 +58,12 @@ print(alpha_blood)
 
 Now we are ready to run bisect:
 ```{r, cache=T}
-results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood)
+results <- bisect_supervised(methylation, total_reads, Pi, alpha_blood, iterations = 10)
 
 head(results)
 ``` 
 
-Before subsampling the dataset of Hahnum el al. we used the method by Housemann et al. (CITE) to estimate the cell composition from the array data. Because array data contains many thausands of probes at each site, the estimate is fairly accurate. Now we can compare the results of BiSect to a baseline:
+Before subsampling the dataset of Hahnum el al. we used the method by @houseman_dna_2012 to estimate the cell composition from the array data. Because array data contains many thausands of probes at each site, the estimate is fairly accurate. Now we can compare the results of BiSect to a baseline:
 
 ```{r, fig.width=7}
 library(dplyr)
@@ -133,7 +133,7 @@ total_known <- total_reads_GSE40279[known_samples_indices, ]
 total_unknown <- total_reads_GSE40279[-known_samples_indices, ]
 
 # Run Bisect, making sure to supply the number of known individuals.
-results <- bisect_semi_suprevised(methylation_unknown, total_unknown, methylation_known, total_known, known_samples, alpha, iterations = 200)
+results <- bisect_semi_suprevised(methylation_unknown, total_unknown, methylation_known, total_known, known_samples, alpha, iterations = 10)
 ```
 
 This time results is a list containing both the cell type estimates for the unknown samples, and the estimated reference. Let us plot the estimated cell types against our full baseline:
@@ -159,4 +159,4 @@ head(estimated_reference)
 mean(diag(cor(estimated_reference, reference_blood[,-1])))
 ```
 
-
+# References
