@@ -7,16 +7,10 @@ BiSect is an accurate method for inferring the cell compositon of samples from t
 This package implements two modes, a *supervised mode*, for estimating the cell composition using a reference that contains the probability for methylation in each isolated cell type (a reference for blood samples is provided), and an *unsupervised mode*, that estimates the reference, but requires the cell composition for a subset of the samples. 
 
 ## Installation
-
-This is an R package. In order to install it you can simply run:
+The package is available on CRAN:
 
 ```
-devtools::install_github("EyalFisher/BiSect/bisect")
-```
-
-You might need to install devtools first, if you don't already have it installed:
-```
-install.packages('devtools')
+install.packages('bisect')
 ```
 
 ## Supervised Mode: Using a Reference
